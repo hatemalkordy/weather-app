@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <!-- font files -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+  <!-- second tby font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+  <!-- font files -->
+  <!-- css files -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  <!-- css files -->  
+  <title>Weather app</title>
+
+  <style>
+    .attribution { font-size: 0.6875rem; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="container">
+
+      <img src="images/logo.svg" alt="logo">
+      <div class="units">
+        <img src="images/icon-units.svg" alt="sitting-icon">
+        <span>Units</span>
+        <img src="images/icon-dropdown.svg" alt="arrow-icon">
+      </div>
+    </div>
+
+    <div class="units-box">
+      <div id="imperial">Switch To Imperial</div>
+
+      <div class="side-title">Temperature</div>
+      <div id="celsius" class="active">Celsius (°C)</div>
+      <div id="fahrenheit">Fahrenheit (°F)</div>
+
+      <div class="side-title">Precipitation</div>
+      <div id="millimeters" class="active">Millimeters (mm)</div>
+      <div id="inches">Inches (in)</div>
+
+    </div>
+
+  </div>
+
+    <!-- start search bar -->
+
+  <div class="search-area">
+    <div class="container">
+      <h1>How's the sky looking today?</h1>
+      <div class="search-bar">
+        <input type="text" placeholder="Search for a place...">
+        <button>Search</button>
+      </div>
+    </div>
+  </div>
+  <!-- end search bar -->
+    
+  <!-- start content -->
+
+
+          <!-- first side -->
+      <div class="content">
+        <div class="container">
+
+          <div class="today-result">
+
+            <!-- first section -->
+            <div class="current-weather-card">
+              <!-- <div class="location-info">
+                <h1 class="city-name">Berlin, Germany</h1>
+                <p class="current-date">Tuesday, Aug 5, 2025</p>
+              </div> -->
+              <!-- <div class="weather-display">
+                <img src="images/icon-sun.svg" alt="weather-icon" class="big-weather-icon">
+                <span class="main-temp">20°</span>
+              </div> -->
+            </div>
+
+            <!-- secound section -->
+            <div class="weather-metrics-grid">
+
+              <!-- <div class="metric-card">
+                <span class="metric-title">Feels Like</span>
+                <span class="metric-value">18°</span>
+              </div> -->
+
+              <!-- <div class="metric-card">
+                <span class="metric-title">Humidity</span>
+                <span class="metric-value">46%</span>
+              </div> -->
+
+              <!-- <div class="metric-card">
+                <span class="metric-title">Wind</span>
+                <span class="metric-value">14 km/h</span>
+              </div> -->
+
+              <!-- <div class="metric-card">
+                <span class="metric-title">Precipitation</span>
+                <span class="metric-value">0 mm</span>
+              </div> -->
+
+            </div>
+
+            <!-- third section -->
+            <div class="daily-forecast-section">
+              <h3 class="section-title">Daily forecast</h3>
+
+              <div class="forecast-days-container">
+
+                <!-- <div class="forecast-day-card">
+                  <span class="day-name">Tue</span>
+                  <img src="images/icon-rain.svg" alt="forecast-icon" class="small-weather-icon">
+                  <div class="day-temps">
+                    <span class="max-temp">20°</span>
+                    <span class="min-temp">14°</span>
+                  </div>
+                </div> -->
+
+              </div>
+
+            </div>
+
+        </div>
+
+          <!-- first side -->
+
+          <!-- second side -->
+      <div class="everyday-result">
+        
+        <div class="days">
+          <span>Hourly forecast</span>
+          <div class="dropdown-day">
+            <span>Day</span>
+            <img src="images/icon-dropdown.svg" alt="arrow-icon">
+          </div>
+        </div>
+
+        <div class="days-switch">
+          <div>Sunday</div>
+          <div>Monday</div>
+          <div>Tuesday</div>
+          <div>Wednesday</div>
+          <div>Thursday</div>
+          <div>Friday</div>
+          <div>Saturday</div>
+        </div>
+      
+        <div class="hourly-list">
+          
+          <!-- <div class="hourly-item">
+            <div class="time-info">
+              <img src="images/icon-weather.svg" alt="weather-icon"> <span>3 PM</span>
+            </div>
+            <span class="temp">20°</span>
+          </div> -->
+
+        </div> 
+      </div>
+      <!-- second side -->
+
+    </div>
+  </div>
+
+  <!-- end content -->
+    <div id="custom-alert" class="custom-alert">City not found! Please try again</div>
+
+    <script src="main.js"></script>
+</body>
+</html>

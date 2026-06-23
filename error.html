@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+    <!-- font files -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <!-- second tby font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+    <!-- font files -->
+    <!-- css files -->
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/all.min.css">
+        <link rel="stylesheet" href="css/main.css">
+    <!-- css files -->  
+
+    <title>Weather app</title>
+
+    <style>
+        .attribution { font-size: 0.6875rem; text-align: center; }
+        .attribution a { color: hsl(228, 45%, 44%); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="container">
+            <img src="images/logo.svg" alt="logo">
+            <div class="units">
+            <img src="images/icon-units.svg" alt="sitting-icon">
+            <span>Units</span>
+            <img src="images/icon-dropdown.svg" alt="arrow-icon">
+        </div>
+    </div>
+
+    <div class="units-box">
+        <div id="imperial">Switch To Imperial</div>
+
+        <div class="side-title">Temperature</div>
+        <div id="celsius" class="active">Celsius (°C)</div>
+        <div id="fahrenheit">Fahrenheit (°F)</div>
+
+        <div class="side-title">Precipitation</div>
+        <div id="millimeters" class="active">Millimeters (mm)</div>
+        <div id="inches">Inches (in)</div>
+
+        </div>
+
+    </div>
+
+    <!--start content -->
+
+    <div id="error-screen" class="error-page">
+        <div class="container"> 
+            <img src="/images/icon-error.svg" alt="error-icon">
+            <h2>Something went wrong</h2>
+            <p>We couldn't connect to the server (API error). Please try again in a few moments.</p>
+            <a href="index.html"><button id="retry-btn" class="retry-button" >Retry</button></a>
+        </div>
+    </div>
+
+    <!--end content -->
+<script src="main.js"></script>
+</body>
