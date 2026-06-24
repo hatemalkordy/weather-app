@@ -331,6 +331,10 @@ a {
         background-image: url(../images/bg-today-small.svg);
         background-repeat: no-repeat;
         background-size: cover;
+        text-align: center;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
     }
 }
 
@@ -349,6 +353,12 @@ a {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+@media (max-width: 768px) {
+    .current-weather-card .weather-display {
+        width: 100%;
+        justify-content: space-between;
+    }
 }
 
 .current-weather-card .big-weather-icon {
