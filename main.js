@@ -14,11 +14,12 @@ let celsiusOption = document.querySelector("#celsius");
 let millimetersOption = document.querySelector("#millimeters");
 
 let isImperial = false;
+let currentSearchedCity = "";
 
 switchBtn.addEventListener("click", () => {
     isImperial = !isImperial;
 
-    let currentCity = typeof currentSearchedCity !== 'undefined' ? currentSearchedCity : "";
+    let currentCity = currentSearchedCity || "";
 
     if (isImperial) {
         fahrenheitOption.classList.add("active");
@@ -80,8 +81,9 @@ function getWeatherIconPath(weatherCode) {
 
 function searchAndGetWeather(cityName, unitType = (isImperial ? "imperial" : "metric")) {
 
-    // before fetch data
-const currentCardContainer = document.querySelector(".current-weather-card");
+    if (!cityName || cityName.trim() === "") return;
+
+    const currentCardContainer = document.querySelector(".current-weather-card");
     if (currentCardContainer) {
         currentCardContainer.innerHTML = `
             <div class="loading-container">
@@ -103,18 +105,16 @@ const currentCardContainer = document.querySelector(".current-weather-card");
 
     const forecastContainer = document.querySelector(".forecast-days-container");
     if (forecastContainer) {
-        forecastContainer.innerHTML = `<div class="forecast-day-card" style="opacity: 0.4; height: 120px; background: rgba(255,255,255,0.05); border-radius: 8px;"></div>`.repeat(7);
+        forecastContainer.innerHTML = `<div class="forecast-day-card skeleton-card"></div>`.repeat(7);
     }
-        
+    
     const hourlyList = document.querySelector(".hourly-list");
     if (hourlyList) {
-        hourlyList.innerHTML = `<div class="hourly-item" style="opacity: 0.4; height: 50px; background: rgba(255,255,255,0.05); margin-bottom: 8px; border-radius: 6px;"></div>`.repeat(6);
+        hourlyList.innerHTML = `<div class="hourly-item skeleton-hourly"></div>`.repeat(6);
     }
 
     const dropdownSpan = document.querySelector(".dropdown-day span");
     if (dropdownSpan) dropdownSpan.textContent = "—";
-
-    // when fetch data after paly dots
 
     const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`;
 
@@ -126,22 +126,21 @@ const currentCardContainer = document.querySelector(".current-weather-card");
                 alertBox.classList.add("show");
     
                 setTimeout(() => {
-                alertBox.classList.remove("show");
+                    alertBox.classList.remove("show");
                 }, 3000);
-
-                // window.location.href = "error.html"; // line for try the error page
 
                 return;
             }
 
-            const { latitude, longitude, name, country } = geoData.results[0];
-            const fullLocationName = `${name}, ${country}`;
+            const { latitude, longitude, name, country, country_code, admin1 } = geoData.results[0];
+            const locationCountry = country || admin1 || country_code || "";
+            const fullLocationName = locationCountry ? `${name}, ${locationCountry}` : name;
             currentSearchedCity = cityName;
 
             let tempUnit = "celsius";
             let windUnit = "kmh";
             let precipUnit = "mm";
-            let tempSign = "°";
+            let tempSign = "°C";
             let windSign = "km/h";
             let precipSign = "mm";
             
@@ -163,11 +162,9 @@ const currentCardContainer = document.querySelector(".current-weather-card");
                     const current = weatherData.current;
                     const currentIcon = getWeatherIconPath(current.weather_code);
                     
-                    
                     const dateOptions = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
                     const formattedDate = new Date().toLocaleDateString('en-US', dateOptions);
 
-                    
                     const currentCardContainer = document.querySelector(".current-weather-card");
                     currentCardContainer.innerHTML = `
                         <div class="location-info">
@@ -180,12 +177,11 @@ const currentCardContainer = document.querySelector(".current-weather-card");
                         </div>
                     `;
 
-                    
                     const metricsGridContainer = document.querySelector(".weather-metrics-grid");
                     metricsGridContainer.innerHTML = `
                         <div class="metric-card">
                             <span class="metric-title">Feels Like</span>
-                            <span class="metric-value">${Math.round(current.apparent_temperature)}°</span>
+                            <span class="metric-value">${Math.round(current.apparent_temperature)}${tempSign}</span>
                         </div>
                         <div class="metric-card">
                             <span class="metric-title">Humidity</span>
@@ -252,27 +248,33 @@ const currentCardContainer = document.querySelector(".current-weather-card");
 
                             document.querySelectorAll(".days-switch div").forEach(div => {
                                 div.classList.remove("active");
-                                if(div.dataset.date === targetDate) div.classList.add("active");
+                                if (div.dataset.date === targetDate) div.classList.add("active");
                             });
 
                             updateHourlySection(targetDate);
                         });
                     });
 
-                    
-                    document.querySelectorAll(".forecast-day-card").forEach(card => {
-                        card.addEventListener("click", (e) => {
+                    document.querySelectorAll(".days-switch div").forEach(div => {
+                        div.addEventListener("click", (e) => {
+                            const selectedDiv = e.currentTarget;
+                            const targetDate = selectedDiv.dataset.date;
+                            const shortName = selectedDiv.dataset.shortName;
 
-                            document.querySelectorAll(".forecast-day-card").forEach(c => c.classList.remove("active-day"));
-                            const selectedCard = e.currentTarget;
-                            selectedCard.classList.add("active-day");
-                            
-                            
-                            const dayNameText = selectedCard.querySelector(".day-name").textContent;
-                            document.querySelector(".dropdown-day span").textContent = dayNameText;
+                            document.querySelectorAll(".days-switch div").forEach(d => d.classList.remove("active"));
+                            selectedDiv.classList.add("active");
 
-                            
-                            updateHourlySection(selectedCard.dataset.date);
+                            document.querySelector(".dropdown-day span").textContent = shortName;
+
+                            document.querySelectorAll(".forecast-day-card").forEach(c => {
+                                c.classList.remove("active-day");
+                                if (c.dataset.date === targetDate) c.classList.add("active-day");
+                            });
+
+                            updateHourlySection(targetDate);
+
+                            document.querySelector(".dropdown-day").classList.remove("active");
+                            document.querySelector(".days-switch").classList.remove("active");
                         });
                     });
                     
@@ -285,7 +287,6 @@ const currentCardContainer = document.querySelector(".current-weather-card");
         .catch(error => {
             console.error("Error updating weather data:", error);
             window.location.href = "error.html";
-            // console.error("Error updating weather data:", error)
         });
 }
 
@@ -302,7 +303,6 @@ function updateHourlySection(targetDate) {
 
         if (currentDatePart === targetDate) {
             const timePart = timeString.split("T")[1];
-            
             
             let hourInt = parseInt(timePart.split(":")[0]);
             const ampm = hourInt >= 12 ? 'PM' : 'AM';
@@ -325,6 +325,7 @@ function updateHourlySection(targetDate) {
         }
     });
 }
+
 const searchInput = document.querySelector(".search-bar input");
 const searchButton = document.querySelector(".search-bar button");
 
@@ -345,5 +346,3 @@ searchInput.addEventListener("keypress", (e) => {
 });
 
 searchAndGetWeather();
-
-
