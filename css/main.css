@@ -313,7 +313,6 @@ a {
 /* ==================== 1.section one ==================== */
 .current-weather-card {
     background-image: url(../images/bg-today-large.svg);
-    
     padding: 30px;
     border-radius: 16px;
     display: flex;
@@ -329,6 +328,10 @@ a {
         background-image: url(../images/bg-today-small.svg);
         background-repeat: no-repeat;
         background-size: cover;
+        height: auto;
+        min-height: 180px;
+        flex-wrap: wrap;
+        gap: 15px;
     }
 }
 
