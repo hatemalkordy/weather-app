@@ -1,4 +1,4 @@
-let units = document.querySelector(".units");
+const units = document.querySelector(".units");
 let unitsBox = document.querySelector(".units-box");
 units.addEventListener('click', function() {
     units.classList.toggle("active");
