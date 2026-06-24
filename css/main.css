@@ -284,7 +284,6 @@ a {
 
 .search-area .container .search-bar button:hover {
     background-color: var(--blue-500);
-    transform: scale(1.1);
 }
 /* end search area */
 
