@@ -196,9 +196,8 @@ a {
     }
 }
 
-/* .search-area .container  */
-h1 {
-    text-align: center;
+.search-area .container h1 {
+    /* text-align: center; */
     color: var(--neutral-0);
     font-size: 50px;
 }
